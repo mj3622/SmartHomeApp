@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">智慧生活</string>
+    <string name="pojo_intro_title">项目说明:</string>
+    <string name="pojo_intro">
+        \t\t本项目为华中科技大学电信学院2024年硬件课程设计——智能家居系统\n\n
+        \t\t作为用户终端设备，我们提供一种远程控制手段。使您无论身在何处，都能轻松管理和操控家中的智能设备\n
+        </string>
+    <string name="pojo_function_title">功能介绍：</string>
+    <string name="pojo_function">\n\t\t1.使用唯一识别码与家庭终端进行绑定\n\t\t2.点击刷新按钮进行设备数据同步\n\t\t3.点击设备图标进入操作页面\n\t\t4.可在个人中心从云端同步数据\n</string>
+    <string name="pojo_member_title">项目成员：</string>
+    <string name="pojo_member">\t\t电信2101 李志伟\n\t\t电信2102 晁玉润 \n\t\t电信2102 詹胜 \n\n\t\t任何问题，请联系：\n\t\tminjer@foxmail.com</string>
+</resources>
