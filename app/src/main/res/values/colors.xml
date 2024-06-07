@@ -15,4 +15,8 @@
     <color name="fuchsia">#FFFF00FF</color>
     <color name="shallow_white">#FFe0c5e0</color>
     <color name="shallow_green">#FF0ef0b7</color>
+    <color name="translucent_white">#88e6e6e6</color>
+    <color name="translucent_green">#88eeffe5</color>
+    <color name="translucent_blue">#88e5ffff</color>
+
 </resources>

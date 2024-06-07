@@ -25,6 +25,8 @@ public class ParamUtil {
 
     public static final String MESSAGE_LIST = "message_list";
 
+    public static final String DEVICE_LIST = "device_list";
+
     // 获取SharedPreferences实例的方法
     private static SharedPreferences getSharedPreferences(Context context) {
         return context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);

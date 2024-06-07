@@ -15,7 +15,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/gray"
+            android:background="@color/translucent_white"
             android:orientation="horizontal">
 
             <ImageView
@@ -48,12 +48,56 @@
                 android:scaleType="fitStart"/>
         </LinearLayout>
 
-        <Button
-            android:id="@+id/button_test"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="测试按钮"
-            android:layout_gravity="center" />
+        <!--   TODO 占位，以后场景选项卡或者显示提示信息    -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:background="@drawable/tab_card"/>
+
+
+        <!--   设备列表模块     -->
+        <ListView
+            android:id="@+id/device_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="8"
+            android:divider="@null"
+            android:layout_margin="5dp"
+            android:dividerHeight="3dp"
+            android:padding="10dp"
+            android:visibility="visible"
+
+            android:background="@color/white"/>
+
+        <!--    设备列表为空时显示   -->
+        <LinearLayout
+            android:id="@+id/device_empty"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="8"
+            android:visibility="gone"
+            android:gravity="center"
+            android:layout_marginBottom="30dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="120dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/gongzuotai"
+                android:layout_margin="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="暂无设备"
+                android:textSize="20sp"
+                android:textColor="@color/gray"
+                android:layout_margin="10dp"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 </FrameLayout>

@@ -10,14 +10,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.minjer.smarthome.adapter.DeviceAdapter;
 import com.minjer.smarthome.http.DataClient;
 import com.minjer.smarthome.http.GaodeClient;
+import com.minjer.smarthome.pojo.Device;
 import com.minjer.smarthome.pojo.Message;
+import com.minjer.smarthome.utils.DeviceUtil;
 import com.minjer.smarthome.utils.DialogUtil;
 import com.minjer.smarthome.utils.JsonUtil;
 import com.minjer.smarthome.utils.MessageUtil;
@@ -25,9 +30,16 @@ import com.minjer.smarthome.utils.ParamUtil;
 import com.minjer.smarthome.utils.TimeUtil;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class DeviceFragment extends Fragment {
+
+    private ListView deviceListView;
+    private LinearLayout emptyView;
+    private List<Device> deviceList;
+    private DeviceAdapter deviceAdapter;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,15 +61,39 @@ public class DeviceFragment extends Fragment {
             startActivity(intent);
         });
 
-        // TODO 测试用 暂时保留
-         rootView.findViewById(R.id.button_test).setOnClickListener(v -> {
-             MessageUtil.addMessage(this.getContext(),new Message("测试消息", "这是一条测试消息", "2021-09-01 12:00:00"));
-             ArrayList<Message> messageList = MessageUtil.getMessageList(this.getContext());
-                Log.d("DeviceFragment", "Message list: " + messageList);
-         });
+        // 初始化设备列表
+        initDeviceList(rootView);
+
 
         // Inflate the layout for this fragment
         return rootView;
+    }
+
+    private void initDeviceList(View rootView) {
+        deviceListView = rootView.findViewById(R.id.device_list);
+        emptyView = rootView.findViewById(R.id.device_empty);
+
+        deviceList = DeviceUtil.getDeviceList(getContext());
+        deviceAdapter = new DeviceAdapter(getContext(), R.layout.item_device, deviceList);
+        deviceListView.setAdapter(deviceAdapter);
+
+        checkDeviceList();
+
+        // TODO 点击设备跳转进入对应的操作页面
+        deviceListView.setOnItemClickListener((parent, view, position, id) -> {
+            Device device = deviceList.get(position);
+            DialogUtil.showToastShort(getContext(), "点击了设备：" + device.getName());
+        });
+    }
+
+    private void checkDeviceList() {
+        if (deviceList.isEmpty()) {
+            deviceListView.setVisibility(View.GONE);
+            emptyView.setVisibility(View.VISIBLE);
+        } else {
+            deviceListView.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.GONE);
+        }
     }
 
     // 初始化天气信息
