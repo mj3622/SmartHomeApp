@@ -17,11 +17,14 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.minjer.smarthome.http.DataClient;
 import com.minjer.smarthome.http.GaodeClient;
+import com.minjer.smarthome.pojo.Message;
 import com.minjer.smarthome.utils.DialogUtil;
 import com.minjer.smarthome.utils.JsonUtil;
+import com.minjer.smarthome.utils.MessageUtil;
 import com.minjer.smarthome.utils.ParamUtil;
 import com.minjer.smarthome.utils.TimeUtil;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class DeviceFragment extends Fragment {
@@ -46,10 +49,11 @@ public class DeviceFragment extends Fragment {
             startActivity(intent);
         });
 
-        // TODO 测试用
+        // TODO 测试用 暂时保留
          rootView.findViewById(R.id.button_test).setOnClickListener(v -> {
-            String time = TimeUtil.getNowTime();
-             DialogUtil.showToastShort(getContext(), time);
+             MessageUtil.addMessage(this.getContext(),new Message("测试消息", "这是一条测试消息", "2021-09-01 12:00:00"));
+             ArrayList<Message> messageList = MessageUtil.getMessageList(this.getContext());
+                Log.d("DeviceFragment", "Message list: " + messageList);
          });
 
         // Inflate the layout for this fragment

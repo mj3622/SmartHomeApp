@@ -12,7 +12,7 @@ public class TimeUtil {
 
     private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat(PATTERN);
 
-    private static final Long WEAHTER_REFREASH_INTERVAL = (long) (1000 * 60 * 60 * 3);
+    private static final Long WEAHTER_REFREASH_INTERVAL = (long) (1000 * 60 * 60 * 1);
 
     public static String getNowTime() {
         return simpleDateFormat.format(new Date());

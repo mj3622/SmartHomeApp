@@ -26,5 +26,23 @@
             android:layout_height="match_parent"
             android:layout_weight="10"/>
 
+        <ImageView
+            android:id="@+id/message_clear_button"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:src="@drawable/clear"/>
+
     </LinearLayout>
+
+    <ListView
+        android:id="@+id/message_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@color/white"
+        android:dividerHeight="3dp"
+        android:layout_margin="10dp"/>
+
 </LinearLayout>
