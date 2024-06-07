@@ -18,6 +18,13 @@ public class ParamUtil {
     public static final String LOGIN_ID = "login_id";
     public static final String LOGIN_PWD = "login_pwd";
 
+    public static final String WEATHER_RESRESH_TIME = "weather_refresh_time";
+
+    public static final String WEATHER_TEMP = "weather_temp";
+    public static final String WEATHER_TYPR = "weather_type";
+
+    public static final String MESSAGE_LIST = "message_list";
+
     // 获取SharedPreferences实例的方法
     private static SharedPreferences getSharedPreferences(Context context) {
         return context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
