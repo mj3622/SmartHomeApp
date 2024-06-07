@@ -13,7 +13,7 @@ public class MessageUtil {
     private static final String TAG = "MessageUtil";
     public static void addMessage(Context context, Message message) {
         ArrayList<Message> messageList = getMessageList(context);
-        messageList.add(message);
+        messageList.add(0, message);
         String messageListJson = JsonUtil.toJson(messageList);
         ParamUtil.saveString(context, ParamUtil.MESSAGE_LIST, messageListJson);
     }

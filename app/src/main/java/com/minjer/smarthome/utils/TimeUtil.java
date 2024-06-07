@@ -11,11 +11,17 @@ public class TimeUtil {
     private static final String PATTERN = "yyyy-MM-dd HH:mm:ss";
 
     private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat(PATTERN);
+    private static final String DAY_PATTERN = "yyyy-MM-dd";
+    private static SimpleDateFormat daySimpleDateFormat = new SimpleDateFormat(DAY_PATTERN);
 
     private static final Long WEAHTER_REFREASH_INTERVAL = (long) (1000 * 60 * 60 * 1);
 
     public static String getNowTime() {
         return simpleDateFormat.format(new Date());
+    }
+
+    public static String getNowDay() {
+        return daySimpleDateFormat.format(new Date());
     }
 
     /**
