@@ -49,7 +49,7 @@ public class DebugActivity extends AppCompatActivity {
         });
 
         findViewById(R.id.debug_rabbitmq).setOnClickListener(v -> {
-            Action action = new Action("AAA", Action.ACTION_TYPE_OPEN, TimeUtil.getNowMillis(), Device.TYPE_SWITCH);
+            Action action = new Action("AAA", Action.ACTION_TYPE_OPEN, TimeUtil.getNowMillis(), Device.TYPE_LIGHT, "ffffaa");
             ActionClient.sendAction(this, action);
             Log.d("DebugActivity", "发送消息成功");
         });

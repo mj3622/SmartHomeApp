@@ -5,10 +5,109 @@
     android:layout_height="match_parent"
     tools:context=".deviceFragent.LightFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="100dp"
+            android:layout_marginBottom="20dp"
+            android:textStyle="bold"
+            android:text="选择颜色"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/show_selected_color"
+            style=""
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center"
+            android:background="#000000"
+            android:gravity="center"
+            android:textSize="30sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="R:"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/et_red"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="0-255"
+                android:inputType="number" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:text="G:"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/et_green"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="40dp"
+                android:hint="0-255"
+                android:inputType="number" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="B:"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/et_blue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="0-255"
+                android:inputType="number" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_close_light"
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="30dp"
+                android:text="关灯"
+                android:textStyle="bold"
+                android:textSize="30dp" />
+
+            <Button
+                android:id="@+id/btn_open_light"
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:text="开灯"
+                android:textStyle="bold"
+                android:textSize="30dp" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </FrameLayout>

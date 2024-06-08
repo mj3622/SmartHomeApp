@@ -50,15 +50,16 @@ public class UserFragment extends Fragment {
         tv_name.setText(name);
         tv_desc.setText(desc);
 
-        //TODO 任务组点击事件
+        // 任务调度点击事件
         rootView.findViewById(R.id.mission_card).setOnClickListener((v) -> {
             Intent intent = new Intent(getContext(),TaskListActivity.class);
             startActivity(intent);
         });
 
-        //TODO 定时任务点击事件
+        // 定时任务点击事件
         rootView.findViewById(R.id.timer_card).setOnClickListener((v) -> {
-            DialogUtil.showToastShort(getContext(), "定时任务功能暂未开放");
+            Intent intent = new Intent(getContext(),OnTimeActivity.class);
+            startActivity(intent);
         });
 
         // 同步点击事件

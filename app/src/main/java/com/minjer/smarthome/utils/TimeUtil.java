@@ -63,4 +63,11 @@ public class TimeUtil {
         Date date = new Date(time);
         return simpleDateFormat.format(date);
     }
+
+    public static boolean isOutTime(String millis) {
+        long time = Long.parseLong(millis);
+        long now = System.currentTimeMillis();
+        return now > time;
+
+    }
 }

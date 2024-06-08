@@ -58,7 +58,7 @@ public class DataClient {
 
     }
 
-    // TODO 上传数据到云端服务器
+    // 上传数据到云端服务器
 
     public static void uploadData(Context context) {
         String url = BASE_URL + "/upload";

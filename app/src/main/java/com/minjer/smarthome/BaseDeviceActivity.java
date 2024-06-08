@@ -106,17 +106,17 @@ public class BaseDeviceActivity extends AppCompatActivity {
         Fragment fragment = null;
         // 初始化设备控制界面
         if (currentDevice.getType().equals(Device.TYPE_CURTAIN)) {
-            fragment = new CurtainFragment();
+            fragment = CurtainFragment.newInstance(currentDevice);
         } else if (currentDevice.getType().equals(Device.TYPE_LIGHT)) {
-            fragment = new LightFragment();
+            fragment = LightFragment.newInstance(currentDevice);
         } else if (currentDevice.getType().equals(Device.TYPE_RADAR)) {
-            fragment = new RadarFragment();
+            fragment = RadarFragment.newInstance(currentDevice);
         } else if (currentDevice.getType().equals(Device.TYPE_SWITCH)) {
             fragment = SwitchFragment.newInstance(currentDevice);
         } else if (currentDevice.getType().equals(Device.TYPE_SENSOR_LIGHT)) {
-            fragment = new SensorLightFragment();
+            fragment = SensorLightFragment.newInstance(currentDevice);
         } else if (currentDevice.getType().equals(Device.TYPE_SENSOR_TEMP)) {
-            fragment = new SensorTempFragment();
+            fragment = SensorTempFragment.newInstance(currentDevice);
         } else {
             Log.e(TAG, "unknown device type: " + currentDevice.getType());
             DialogUtil.showToastShort(this, "未知设备类型");
