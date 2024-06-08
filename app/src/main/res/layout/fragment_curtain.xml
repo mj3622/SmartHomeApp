@@ -5,10 +5,56 @@
     android:layout_height="match_parent"
     tools:context=".deviceFragent.CurtainFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_marginTop="150dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/curtainOpenImage"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:scaleType="center"
+            android:src="@drawable/curtain_open" />
+
+        <ImageView
+            android:id="@+id/curtainCloseImage"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:scaleType="center"
+            android:src="@drawable/curtain_close"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/closeCurtain"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:onClick="closeCurtain"
+                android:text="关闭"
+                android:textSize="34dp"
+                android:layout_marginRight="20dp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/openCurtain"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:onClick="openCurtain"
+                android:text="打开"
+                android:layout_marginLeft="20dp"
+                android:textSize="34dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
 
 </FrameLayout>

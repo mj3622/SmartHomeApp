@@ -89,6 +89,7 @@ private static String exchange;
             channel.close();
             connection.close();
         } catch (Exception e) {
+            Log.e(TAG, message);
             Log.e(TAG, "Failed to send message", e);
         }
     }
