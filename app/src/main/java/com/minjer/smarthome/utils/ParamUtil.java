@@ -27,6 +27,12 @@ public class ParamUtil {
 
     public static final String DEVICE_LIST = "device_list";
 
+    public static final String ACTION_PACK_LIST = "action_pack_list";
+
+    public static final String PACK_CREAT_TEMP_LIST = "pack_creat_temp_list";
+
+    public static final String ON_TIME_LIST = "on_time_list";
+
     // 获取SharedPreferences实例的方法
     private static SharedPreferences getSharedPreferences(Context context) {
         return context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);

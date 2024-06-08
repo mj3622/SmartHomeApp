@@ -77,4 +77,8 @@ public class DeviceUtil {
         String deviceListJson = JsonUtil.toJson(deviceList);
         ParamUtil.saveString(context, ParamUtil.DEVICE_LIST, deviceListJson);
     }
+
+    public static Boolean isControlDevice(String type) {
+        return type.equals(Device.TYPE_LIGHT) || type.equals(Device.TYPE_SWITCH) || type.equals(Device.TYPE_CURTAIN);
+    }
 }

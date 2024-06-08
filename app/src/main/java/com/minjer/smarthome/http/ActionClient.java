@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.minjer.smarthome.pojo.Action;
+import com.minjer.smarthome.pojo.ActionPack;
 import com.minjer.smarthome.utils.DialogUtil;
 import com.minjer.smarthome.utils.JsonUtil;
 import com.minjer.smarthome.utils.ParamUtil;
@@ -12,6 +13,7 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 
 import java.security.Key;
+import java.util.List;
 
 public class ActionClient extends Thread {
     private static final String BASE_EXCHANGE = "hdwork.exchange.";
@@ -45,6 +47,18 @@ private static String exchange;
             return;
         }
         new ActionClient(JsonUtil.toJson(action), key).start();
+    }
+
+    public static void executeActionPack(Context context, ActionPack ap) {
+        List<Action> actions = ap.getActions();
+        for (Action action : actions) {
+            sendAction(context, action);
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     @Override

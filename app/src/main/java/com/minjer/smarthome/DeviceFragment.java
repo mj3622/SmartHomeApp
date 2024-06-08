@@ -178,7 +178,7 @@ public class DeviceFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.d(TAG, requestCode + " " + resultCode);
-        if (requestCode == REQUEST_CODE_MODIFY_DEVICE) {
+        if (requestCode == REQUEST_CODE_MODIFY_DEVICE && resultCode == Activity.RESULT_OK) {
             Log.d(TAG, "Update device list");
             PageUtil.refreshPage(getActivity());
         }

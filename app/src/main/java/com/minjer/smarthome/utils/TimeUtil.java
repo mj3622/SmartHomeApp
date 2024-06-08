@@ -57,4 +57,10 @@ public class TimeUtil {
         Log.d(TAG, "Millis: " + millis);
         return String.valueOf(millis);
     }
+
+    public static String parseMillis(String millis) {
+        long time = Long.parseLong(millis);
+        Date date = new Date(time);
+        return simpleDateFormat.format(date);
+    }
 }
