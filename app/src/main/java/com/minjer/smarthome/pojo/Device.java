@@ -1,6 +1,11 @@
 package com.minjer.smarthome.pojo;
 
-public class Device {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
+public class Device implements Parcelable {
     public static final String TYPE_LIGHT = "light";
     public static final String TYPE_SWITCH = "switch";
     public static final String TYPE_SENSOR_LIGHT = "sensor_light";
@@ -29,6 +34,26 @@ public class Device {
 
     public Device() {
     }
+
+    protected Device(Parcel in) {
+        name = in.readString();
+        ID = in.readString();
+        type = in.readString();
+        status = in.readString();
+        description = in.readString();
+    }
+
+    public static final Creator<Device> CREATOR = new Creator<Device>() {
+        @Override
+        public Device createFromParcel(Parcel in) {
+            return new Device(in);
+        }
+
+        @Override
+        public Device[] newArray(int size) {
+            return new Device[size];
+        }
+    };
 
     public String getName() {
         return name;
@@ -68,5 +93,19 @@ public class Device {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(ID);
+        dest.writeString(type);
+        dest.writeString(status);
+        dest.writeString(description);
     }
 }

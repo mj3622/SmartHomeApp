@@ -3,66 +3,93 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AboutFragment"
+    android:layout_margin="10dp"
     android:background="@color/white"
-    android:layout_margin="10dp">
+    tools:context=".AboutFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <!--  项目说明部分  -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/pojo_intro_title"
-            android:textStyle="bold"
-            android:textSize="30sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/pojo_intro"
-            android:textSize="17sp"
-            android:layout_margin="5dp"/>
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:background="@drawable/item_test_color"
+            android:orientation="vertical">
+            <!--  项目说明部分  -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pojo_intro_title"
+                android:textSize="30sp"
+                android:textStyle="bold" />
 
-        <!--  项目功能部分  -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/pojo_function_title"
-            android:textStyle="bold"
-            android:textSize="30sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/pojo_intro"
+                android:textSize="17sp" />
+        </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/pojo_function"
-            android:textSize="17sp"
-            android:layout_margin="5dp"/>
+            android:padding="5dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/item_test_color"
+            android:orientation="vertical">
+            <!--  项目功能部分  -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pojo_function_title"
+                android:textSize="30sp"
+                android:textStyle="bold" />
 
-        <!--  项目成员介绍  -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/pojo_member_title"
-            android:textStyle="bold"
-            android:textSize="30sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/pojo_function"
+                android:textSize="17sp" />
+        </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/pojo_member"
-            android:textSize="17sp"
-            android:layout_margin="5dp"/>
+            android:layout_margin="5dp"
+            android:background="@drawable/item_test_color"
+            android:padding="5dp"
+            android:orientation="vertical">
+            <!--  项目成员介绍  -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pojo_member_title"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/pojo_member"
+                android:textSize="17sp" />
+        </LinearLayout>
+
 
         <ImageView
             android:id="@+id/debug_button"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/debug"
-            android:layout_marginTop="50dp"
-            android:layout_gravity="bottom|right"/>
+            android:layout_gravity="bottom|right"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/debug" />
 
     </LinearLayout>
 

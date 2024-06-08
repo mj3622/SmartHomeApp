@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         // 设置底部导航栏
         bottomNavigationView = findViewById(R.id.nav_view);
+        bottomNavigationView.getMenu().getItem(1).setChecked(true);
 
         currentFragment = new DeviceFragment(); // 假设HomeFragment是默认显示的Fragment
         displayFragment(currentFragment);

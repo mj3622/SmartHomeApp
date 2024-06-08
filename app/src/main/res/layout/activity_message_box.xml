@@ -15,25 +15,30 @@
         <ImageView
             android:id="@+id/message_go_back_button"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="30dp"
-            android:layout_margin="10dp"
             android:layout_gravity="left|bottom"
-            android:src="@drawable/xiangzuo"/>
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:src="@drawable/xiangzuo" />
 
-        <View
+        <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="10"/>
+            android:gravity="center"
+            android:layout_weight="10"
+            android:text="收信箱"
+            android:textSize="25dp"
+            android:layout_margin="5dp"
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/message_clear_button"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="30dp"
             android:layout_gravity="center"
             android:layout_margin="10dp"
-            android:src="@drawable/clear"/>
+            android:layout_weight="1"
+            android:src="@drawable/clear" />
 
     </LinearLayout>
 
@@ -41,8 +46,8 @@
         android:id="@+id/message_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:divider="@color/white"
-        android:dividerHeight="3dp"
-        android:layout_margin="10dp"/>
+        android:dividerHeight="3dp" />
 
 </LinearLayout>

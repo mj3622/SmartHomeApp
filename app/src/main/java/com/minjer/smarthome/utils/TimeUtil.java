@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.Log;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Date;
 
 public class TimeUtil {
@@ -42,5 +44,17 @@ public class TimeUtil {
         } catch (Exception e) {
             return true;
         }
+    }
+
+    public static String getNowMillis() {
+        long millis = System.currentTimeMillis();
+        Log.d(TAG, "Millis: " + millis);
+        return String.valueOf(millis);
+    }
+
+    public static String getMillis(LocalDateTime time) {
+        long millis = time.toInstant(ZoneOffset.of("+8")).toEpochMilli();
+        Log.d(TAG, "Millis: " + millis);
+        return String.valueOf(millis);
     }
 }

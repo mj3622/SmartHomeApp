@@ -16,7 +16,9 @@
         android:layout_weight="15"
         android:background="@color/white"/>
 
+<!--  初始选择第二个界面  -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
+
         android:id="@+id/nav_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

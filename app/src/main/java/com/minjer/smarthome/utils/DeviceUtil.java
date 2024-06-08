@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 public class DeviceUtil {
     private static final String TAG = "DeviceUtil";
@@ -46,13 +47,34 @@ public class DeviceUtil {
 
     public static Device randomGenerateDevice() {
         Device device = new Device();
-        device.setID("AAAAAAAAAAAAA");
-        device.setName("测试设备");
-        device.setDescription("这是一个测试设备");
+        device.setID(UUID.randomUUID().toString());
+        device.setDescription(device.getID());
         device.setStatus(Device.STATUS_ON);
         // 随机选择一个
         device.setType(types.get((int) (Math.random() * types.size())));
+        device.setName(device.getType());
 
         return device;
+    }
+
+    public static void removeDevice(Context context, Device device) {
+        ArrayList<Device> deviceList = getDeviceList(context);
+        deviceList.remove(device);
+        String deviceListJson = JsonUtil.toJson(deviceList);
+        ParamUtil.saveString(context, ParamUtil.DEVICE_LIST, deviceListJson);
+    }
+
+    // 将更新过的移到最前面
+    public static void updateDevice(Context context, Device device) {
+        ArrayList<Device> deviceList = getDeviceList(context);
+        for (int i = 0; i < deviceList.size(); i++) {
+            if (deviceList.get(i).getID().equals(device.getID())) {
+                deviceList.remove(i);
+                deviceList.add(0, device);
+                break;
+            }
+        }
+        String deviceListJson = JsonUtil.toJson(deviceList);
+        ParamUtil.saveString(context, ParamUtil.DEVICE_LIST, deviceListJson);
     }
 }

@@ -1,5 +1,6 @@
 package com.minjer.smarthome;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -26,9 +27,11 @@ import com.minjer.smarthome.utils.DeviceUtil;
 import com.minjer.smarthome.utils.DialogUtil;
 import com.minjer.smarthome.utils.JsonUtil;
 import com.minjer.smarthome.utils.MessageUtil;
+import com.minjer.smarthome.utils.PageUtil;
 import com.minjer.smarthome.utils.ParamUtil;
 import com.minjer.smarthome.utils.TimeUtil;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +42,10 @@ public class DeviceFragment extends Fragment {
     private LinearLayout emptyView;
     private List<Device> deviceList;
     private DeviceAdapter deviceAdapter;
+
+    private final static int REQUEST_CODE_MODIFY_DEVICE = 1;
+
+    private static final String TAG = "DeviceFragment";
 
 
     @Override
@@ -64,7 +71,6 @@ public class DeviceFragment extends Fragment {
         // 初始化设备列表
         initDeviceList(rootView);
 
-
         // Inflate the layout for this fragment
         return rootView;
     }
@@ -79,10 +85,13 @@ public class DeviceFragment extends Fragment {
 
         checkDeviceList();
 
-        // TODO 点击设备跳转进入对应的操作页面
         deviceListView.setOnItemClickListener((parent, view, position, id) -> {
             Device device = deviceList.get(position);
-            DialogUtil.showToastShort(getContext(), "点击了设备：" + device.getName());
+            Log.d(TAG, "Click device: " + device.getName());
+            Intent intent = new Intent(getContext(), BaseDeviceActivity.class);
+            String deviceJson = JsonUtil.toJson(device);
+            intent.putExtra("device", deviceJson);
+            startActivityForResult(intent, REQUEST_CODE_MODIFY_DEVICE);
         });
     }
 
@@ -104,7 +113,14 @@ public class DeviceFragment extends Fragment {
         // 获取城市信息
         String code = ParamUtil.getString(getContext(), ParamUtil.CITY, null);
         if (code == null) {
-            String cityInfo = GaodeClient.getCity();
+            String cityInfo = null;
+            try {
+                cityInfo = GaodeClient.getCity();
+            } catch (IOException e) {
+                Log.e(TAG, "Failed to get city info", e);
+                DialogUtil.showToastShort(getContext(), "网络连接失败");
+                return;
+            }
             Map<String, Object> result = JsonUtil.parseToMap(cityInfo);
             String province = (String) result.get("province");
             String city = (String) result.get("city");
@@ -141,8 +157,7 @@ public class DeviceFragment extends Fragment {
         // 设置天气图标
         if (weatherType.contains("云")) {
             weatherIcon.setImageResource(R.drawable.qingzhuanduoyun);
-        }
-        else if (weatherType.contains("晴")) {
+        } else if (weatherType.contains("晴")) {
             weatherIcon.setImageResource(R.drawable.qingtian);
         } else if (weatherType.contains("雨")) {
             weatherIcon.setImageResource(R.drawable.dayu);
@@ -156,6 +171,16 @@ public class DeviceFragment extends Fragment {
             weatherIcon.setImageResource(R.drawable.feng);
         } else {
             weatherIcon.setImageResource(R.drawable.yintian);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d(TAG, requestCode + " " + resultCode);
+        if (requestCode == REQUEST_CODE_MODIFY_DEVICE) {
+            Log.d(TAG, "Update device list");
+            PageUtil.refreshPage(getActivity());
         }
     }
 }

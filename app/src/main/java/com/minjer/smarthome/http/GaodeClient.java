@@ -28,16 +28,11 @@ public class GaodeClient {
      *
      * @return 城市信息 原始字符串
      */
-    public static String getCity() {
+    public static String getCity() throws IOException{
         String url = GET_CITY_URL + "?key=" + KEY;
-        try {
-            String response = HttpClient.doGet(url);
-            Log.d(TAG, "Response: " + response);
-            return response;
-        } catch (IOException e) {
-            Log.e(TAG, "Failed to get city", e);
-            return null;
-        }
+        String response = HttpClient.doGet(url);
+        Log.d(TAG, "Response: " + response);
+        return response;
     }
 
     /**

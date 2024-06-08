@@ -21,10 +21,22 @@
             android:layout_gravity="left|bottom"
             android:src="@drawable/xiangzuo"/>
 
-        <View
+        <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="10"/>
+            android:gravity="center"
+            android:layout_weight="10"
+            android:text="收信箱"
+            android:textSize="25dp"
+            android:layout_margin="5dp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            android:layout_gravity="left|bottom" />
 
     </LinearLayout>
 

@@ -20,6 +20,7 @@ import com.minjer.smarthome.utils.DialogUtil;
 import com.minjer.smarthome.utils.JsonUtil;
 import com.minjer.smarthome.utils.ParamUtil;
 
+import java.io.IOException;
 import java.util.Map;
 
 
@@ -71,11 +72,16 @@ public class UserFragment extends Fragment {
                     .setMessage("是否要读取云端数据进行覆盖本地数据？")
                     .setPositiveButton("同步", (dialog, which) -> {
                         // 同步数据
-                        DataClient.syncData(this.getContext());
+                        try {
+                            DataClient.syncData(this.getContext());
+                        } catch (IOException e) {
+                            Log.e("UserFragment", "syncData: ", e);
+                            DialogUtil.showToastShort(getContext(), "同步失败，请检查网络连接");
+                            return;
+                        }
                         DialogUtil.showToastShort(getContext(), "同步成功");
                     })
                     .setNegativeButton("取消", (dialog, which) -> {
-                        return;
                     })
                     .show();
         });
@@ -156,9 +162,11 @@ public class UserFragment extends Fragment {
         //城市设置点击事件
         rootView.findViewById(R.id.city_card).setOnClickListener((v) -> {
             // 获取城市信息
-            String response = GaodeClient.getCity();
-
-            if (response == null) {
+            String response = null;
+            try {
+                response = GaodeClient.getCity();
+            } catch (IOException e) {
+                Log.e("UserFragment", "Failed to get city info", e);
                 DialogUtil.showToastShort(getContext(), "获取失败，请检查网络连接");
                 return;
             }
@@ -189,7 +197,7 @@ public class UserFragment extends Fragment {
                         .setMessage("当前已绑定中枢" + bindCode + "，是否解绑？")
                         .setPositiveButton("解绑", (dialog, which) -> {
                             // 解绑中枢
-                            ParamUtil.remove(getContext(), "gatewayCode");
+                            ParamUtil.remove(getContext(), ParamUtil.GATEWAT_CODE);
                             DialogUtil.showToastShort(getContext(), "解绑成功");
                         })
                         .setNegativeButton("取消", (dialog, which) -> {
@@ -210,6 +218,18 @@ public class UserFragment extends Fragment {
 
                             if (inputText.isEmpty()) {
                                 DialogUtil.showToastShort(getContext(), "中枢识别码不能为空");
+                                return;
+                            }
+
+                            // 向服务器检验识别码是否可以绑定
+                            try {
+                                if (!DataClient.checkGateway(inputText)) {
+                                    DialogUtil.showToastShort(getContext(), "中枢识别码不正确");
+                                    return;
+                                }
+                            } catch (IOException e) {
+                                Log.e("UserFragment", "checkGateway: ", e);
+                                DialogUtil.showToastShort(getContext(), "绑定失败，请检查网络连接");
                                 return;
                             }
 
@@ -334,7 +354,11 @@ public class UserFragment extends Fragment {
                         .setMessage("用户："+ userId +"，请问您是否要退出当前账户？")
                         .setPositiveButton("确定", (dialog, which) -> {
                             // 将信息保存至远程
-                            DataClient.syncData(this.getContext());
+                            try {
+                                DataClient.syncData(this.getContext());
+                            } catch (IOException e) {
+                                Log.e("UserFragment", "syncData: ", e);
+                            }
 
                             // 清除所有用户信息
                            ParamUtil.clear(getContext());

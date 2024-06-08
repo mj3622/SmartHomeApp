@@ -1,41 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/white"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DebugActivity"
+    android:background="@color/white"
     android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".DebugActivity">
 
     <Button
         android:id="@+id/debug_add_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:text="添加消息"/>
+        android:text="添加消息" />
 
     <Button
         android:id="@+id/debug_clear_device"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:text="清空设备"/>
+        android:text="清空设备" />
 
     <Button
         android:id="@+id/debug_add_device"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:text="添加设备"/>
+        android:text="添加设备" />
 
     <Button
-        android:id="@+id/debug_switch_device_list_color"
+        android:id="@+id/debug_rabbitmq"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:text="切换设备列表颜色"/>
+        android:text="测试RabbitMQ" />
+
+    <Button
+        android:id="@+id/debug_add_custom_device"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="添加自定义设备" />
+
+    <Button
+        android:id="@+id/debug_show_custom_window"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="显示自定义窗口" />
+
+    <Button
+        android:id="@+id/debug_send_delay_task"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="发送延迟操作任务" />
 
 
 </LinearLayout>

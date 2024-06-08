@@ -22,37 +22,39 @@ public class DataClient {
 
 
     // 数据与云端服务器进行同步 等待测试
-    public static void syncData(Context context) {
+    public static void syncData(Context context) throws IOException {
         String url = BASE_URL + "/download";
 
-        String userId = ParamUtil.getString(context,ParamUtil.LOGIN_ID,null);
+        String userId = ParamUtil.getString(context, ParamUtil.LOGIN_ID, null);
         JsonObject params = new JsonObject();
         params.addProperty("user_id", userId);
 
-        try {
-            String res = HttpClient.doJsonPost(url, params, null);
-            if (res == null) {
-                DialogUtil.showToastShort(null, "网络错误");
-                return;
-            }
-            Log.d(TAG, "Response: " + res);
-            Map<String, Object> resMap = JsonUtil.parseToMap(res);
-            Log.d(TAG, "Response Map: " + resMap);
 
-            // 写入本地数据库
-            if (resMap.get("city") != null) ParamUtil.saveString(context, ParamUtil.CITY, Objects.requireNonNull(resMap.get("city")).toString());
-            if (resMap.get("cityCode") != null) ParamUtil.saveString(context, ParamUtil.CITY_CODE, Objects.requireNonNull(resMap.get("cityCode")).toString());
-            if (resMap.get("province") != null) ParamUtil.saveString(context, ParamUtil.PROVINCE, Objects.requireNonNull(resMap.get("province")).toString());
-            if (resMap.get("gateway_code") != null) ParamUtil.saveString(context, ParamUtil.GATEWAT_CODE, Objects.requireNonNull(resMap.get("gateway_code")).toString());
-            if (resMap.get("name") != null) ParamUtil.saveString(context, ParamUtil.USER_NAME, Objects.requireNonNull(resMap.get("name")).toString());
-            if (resMap.get("email") != null) ParamUtil.saveString(context, ParamUtil.E_MAIL, Objects.requireNonNull(resMap.get("email")).toString());
-            if (resMap.get("desc") != null) ParamUtil.saveString(context, ParamUtil.USER_DESC, Objects.requireNonNull(resMap.get("desc")).toString());
-
-
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        String res = HttpClient.doJsonPost(url, params, null);
+        if (res == null) {
+            DialogUtil.showToastShort(null, "网络错误");
+            return;
         }
+        Log.d(TAG, "Response: " + res);
+        Map<String, Object> resMap = JsonUtil.parseToMap(res);
+        Log.d(TAG, "Response Map: " + resMap);
+
+        // 写入本地数据库
+        if (resMap.get("city") != null)
+            ParamUtil.saveString(context, ParamUtil.CITY, Objects.requireNonNull(resMap.get("city")).toString());
+        if (resMap.get("cityCode") != null)
+            ParamUtil.saveString(context, ParamUtil.CITY_CODE, Objects.requireNonNull(resMap.get("cityCode")).toString());
+        if (resMap.get("province") != null)
+            ParamUtil.saveString(context, ParamUtil.PROVINCE, Objects.requireNonNull(resMap.get("province")).toString());
+        if (resMap.get("gateway_code") != null)
+            ParamUtil.saveString(context, ParamUtil.GATEWAT_CODE, Objects.requireNonNull(resMap.get("gateway_code")).toString());
+        if (resMap.get("name") != null)
+            ParamUtil.saveString(context, ParamUtil.USER_NAME, Objects.requireNonNull(resMap.get("name")).toString());
+        if (resMap.get("email") != null)
+            ParamUtil.saveString(context, ParamUtil.E_MAIL, Objects.requireNonNull(resMap.get("email")).toString());
+        if (resMap.get("desc") != null)
+            ParamUtil.saveString(context, ParamUtil.USER_DESC, Objects.requireNonNull(resMap.get("desc")).toString());
+
 
     }
 
@@ -62,14 +64,14 @@ public class DataClient {
         String url = BASE_URL + "/upload";
 
         JsonObject params = new JsonObject();
-        params.addProperty("user_id", ParamUtil.getString(context,ParamUtil.LOGIN_ID,null));
-        params.addProperty("city", ParamUtil.getString(context,ParamUtil.CITY,""));
-        params.addProperty("city_code", ParamUtil.getString(context,ParamUtil.CITY_CODE,""));
-        params.addProperty("province", ParamUtil.getString(context,ParamUtil.PROVINCE,""));
-        params.addProperty("gateway_code", ParamUtil.getString(context,ParamUtil.GATEWAT_CODE,""));
-        params.addProperty("name", ParamUtil.getString(context,ParamUtil.USER_NAME,""));
-        params.addProperty("email", ParamUtil.getString(context,ParamUtil.E_MAIL,""));
-        params.addProperty("desc", ParamUtil.getString(context,ParamUtil.USER_DESC,""));
+        params.addProperty("user_id", ParamUtil.getString(context, ParamUtil.LOGIN_ID, null));
+        params.addProperty("city", ParamUtil.getString(context, ParamUtil.CITY, ""));
+        params.addProperty("city_code", ParamUtil.getString(context, ParamUtil.CITY_CODE, ""));
+        params.addProperty("province", ParamUtil.getString(context, ParamUtil.PROVINCE, ""));
+        params.addProperty("gateway_code", ParamUtil.getString(context, ParamUtil.GATEWAT_CODE, ""));
+        params.addProperty("name", ParamUtil.getString(context, ParamUtil.USER_NAME, ""));
+        params.addProperty("email", ParamUtil.getString(context, ParamUtil.E_MAIL, ""));
+        params.addProperty("desc", ParamUtil.getString(context, ParamUtil.USER_DESC, ""));
 
         try {
             String res = HttpClient.doJsonPost(url, params, null);
@@ -107,5 +109,21 @@ public class DataClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static boolean checkGateway(String code) throws IOException{
+        JsonObject params = new JsonObject();
+        params.addProperty("gateway_code", code);
+
+        String res = HttpClient.doJsonPost(BASE_URL + "/check", params, null);
+
+        Log.d(TAG, "Response: " + res);
+
+        Map<String, Object> resMap = JsonUtil.parseToMap(res);
+        Log.d(TAG, "Response Map: " + resMap);
+        String isValid = Objects.requireNonNull(resMap.get("isValid")).toString().substring(0, 1);
+
+        return isValid.equals("1");
+
     }
 }

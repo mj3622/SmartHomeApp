@@ -1,10 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".BaseDeviceActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!--  顶部导航栏  -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/translucent_white"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/device_control_go_back_button"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
+            android:layout_gravity="left|center"
+            android:src="@drawable/xiangzuo"/>
+
+        <TextView
+            android:id="@+id/device_control_title"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="8"
+
+            android:text="客厅的开关1"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="25dp"/>
+
+        <ImageView
+            android:id="@+id/device_control_change_info_button"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="right|center"
+            android:src="@drawable/change_info"/>
+
+    </LinearLayout>
+
+    <!--  设备列表模块  -->
+    <FrameLayout
+        android:id="@+id/device_control_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:background="@drawable/tab_card"/>
+
+</LinearLayout>

@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.SmartHomeApp" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.SmartHomeApp" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
@@ -8,6 +8,8 @@
     <style name="Theme.SmartHomeApp" parent="Base.Theme.SmartHomeApp">
         <item name="colorPrimary">@color/gray</item>
         <item name="colorPrimaryDark">@color/gray</item>
+
+
     </style>
 
 </resources>

@@ -1,14 +1,32 @@
 package com.minjer.smarthome.pojo;
 
 public class Action {
-    private String deviceId;
-    private Integer actionType;
-    private String msg;
 
-    public Action(String deviceId, Integer actionType, String msg) {
+    public static final String ACTION_TYPE_OPEN = "open";
+    public static final String ACTION_TYPE_CLOSE = "close";
+
+
+    private String deviceId;
+    private String deviceType;
+    private String actionType;
+    private String Time;
+
+    public Action(String deviceId, String actionType, String time, String deviceType) {
         this.deviceId = deviceId;
         this.actionType = actionType;
-        this.msg = msg;
+        this.Time = time;
+        this.deviceType = deviceType;
+    }
+
+    public Action() {
+    }
+
+    public String getDeviceType() {
+        return deviceType;
+    }
+
+    public void setDeviceType(String deviceType) {
+        this.deviceType = deviceType;
     }
 
     public String getDeviceId() {
@@ -19,19 +37,19 @@ public class Action {
         this.deviceId = deviceId;
     }
 
-    public Integer getActionType() {
+    public String getActionType() {
         return actionType;
     }
 
-    public void setActionType(Integer actionType) {
+    public void setActionType(String actionType) {
         this.actionType = actionType;
     }
 
-    public String getMsg() {
-        return msg;
+    public String getTime() {
+        return Time;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public void setTime(String time) {
+        this.Time = time;
     }
 }
