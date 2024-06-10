@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.reflect.TypeToken;
+import com.minjer.smarthome.http.ActionClient;
+import com.minjer.smarthome.http.DataClient;
 import com.minjer.smarthome.pojo.Device;
 import com.minjer.smarthome.pojo.Message;
 
@@ -80,5 +82,28 @@ public class DeviceUtil {
 
     public static Boolean isControlDevice(String type) {
         return type.equals(Device.TYPE_LIGHT) || type.equals(Device.TYPE_SWITCH) || type.equals(Device.TYPE_CURTAIN);
+    }
+
+    // 从服务器获取设备状态
+    public static void syncDeviceStatus(Context context) throws Exception{
+        ArrayList<Device> deviceList = getDeviceList(context);
+
+        ArrayList<Device> deviceStatusList = ActionClient.getDeviceList(context);
+        // 更具ID更新设备状态
+
+        for (Device deviceStatus : deviceStatusList) {
+            for (Device device : deviceList) {
+                if (device.getID().equals(deviceStatus.getID())) {
+                    device.setStatus(deviceStatus.getStatus());
+                    break;
+                }
+            }
+            // TODO 这里新设备类型未知可能有Bug
+            Device device = new Device("新设备" + deviceStatus.getID(), deviceStatus.getID(), deviceStatus.getType(), deviceStatus.getStatus(), "自动同步的新设备");
+            deviceList.add(0, device);
+        }
+
+        String deviceListJson = JsonUtil.toJson(deviceList);
+        ParamUtil.saveString(context, ParamUtil.DEVICE_LIST, deviceListJson);
     }
 }

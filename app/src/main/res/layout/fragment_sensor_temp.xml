@@ -5,10 +5,103 @@
     android:layout_height="match_parent"
     tools:context=".deviceFragent.SensorTempFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical">
 
+        <!--   显示温度部分     -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/tab_card"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:src="@drawable/wendu"
+                android:layout_gravity="center"
+                android:scaleType="fitCenter"
+                android:layout_marginTop="20dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="温度"
+                android:textSize="30sp"
+                android:textColor="@color/black"
+                android:layout_gravity="center" />
+
+            <TextView
+                android:id="@+id/sensor_value_temperature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="25℃"
+                android:textSize="30sp"
+                android:textColor="@color/black"
+                android:layout_gravity="center" />
+
+            <TextView
+                android:id="@+id/sensor_temperature_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="现在温度适宜"
+                android:textColor="@color/gray"
+                android:textSize="20sp" />
+
+
+        </LinearLayout>
+
+        <!--   显示湿度部分     -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/tab_card"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:src="@drawable/shidu"
+                android:layout_gravity="center"
+                android:scaleType="fitCenter"
+                android:layout_marginTop="20dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="湿度"
+                android:textSize="30sp"
+                android:textColor="@color/black"
+                android:layout_gravity="center" />
+
+            <TextView
+                android:id="@+id/sensor_value_humidity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="95%"
+                android:textSize="30sp"
+                android:textColor="@color/black"
+                android:layout_gravity="center" />
+
+            <TextView
+                android:id="@+id/sensor_humidity_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="现在湿度比较高，请注意防潮"
+                android:textSize="20sp"
+                android:textColor="@color/gray"
+                android:layout_gravity="center" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 </FrameLayout>

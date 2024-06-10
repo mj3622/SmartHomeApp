@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,9 +21,11 @@ import com.minjer.smarthome.pojo.Message;
 import com.minjer.smarthome.utils.DeviceUtil;
 import com.minjer.smarthome.utils.DialogUtil;
 import com.minjer.smarthome.utils.MessageUtil;
+import com.minjer.smarthome.utils.ParamUtil;
 import com.minjer.smarthome.utils.TimeUtil;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class DebugActivity extends AppCompatActivity {
 
@@ -49,13 +52,12 @@ public class DebugActivity extends AppCompatActivity {
         });
 
         findViewById(R.id.debug_rabbitmq).setOnClickListener(v -> {
-            Action action = new Action("AAA", Action.ACTION_TYPE_OPEN, TimeUtil.getNowMillis(), Device.TYPE_LIGHT, "ffffaa");
+            Action action = new Action(Device.RASPBERRY_ID, Action.ACTION_TYPE_OPEN, TimeUtil.getNowMillis(), Device.TYPE_RASPBERRY, "temp_hum");
             ActionClient.sendAction(this, action);
             Log.d("DebugActivity", "发送消息成功");
         });
 
         findViewById(R.id.debug_add_custom_device).setOnClickListener(v -> {
-            // Create a custom dialog
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("添加自定义设别");
 
@@ -97,22 +99,56 @@ public class DebugActivity extends AppCompatActivity {
             builder.show();
         });
 
-        findViewById(R.id.debug_show_custom_window).setOnClickListener(v -> {
-            ControlDialog dialog = new ControlDialog(this);
-            dialog.setTitle("自定义窗口")
-                    .setMessage("这是一个自定义窗口")
-                    .setOnClickListener(new ControlDialog.OnClickListener() {
-                        @Override
-                        public void onCancelClick() {
-                            DialogUtil.showToastShort(DebugActivity.this, "点击了取消");
+        findViewById(R.id.debug_change_device_status).setOnClickListener(v -> {
+            LinearLayout layout = new LinearLayout(this);
+            layout.setOrientation(LinearLayout.VERTICAL);
+            layout.setPadding(16, 16, 16, 16);
+
+            // 选择设备ID
+            Spinner deviceSpinner = new Spinner(this);
+            ArrayList<Device> deviceList = DeviceUtil.getDeviceList(this);
+
+            ArrayList<String> deviceIds = new ArrayList<>();
+            for (Device device : deviceList) {
+                deviceIds.add(device.getID());
+            }
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, deviceIds);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            deviceSpinner.setAdapter(adapter);
+            layout.addView(deviceSpinner);
+
+            // 选择状态
+            Spinner statusSpinner = new Spinner(this);
+            ArrayAdapter<String> statusAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, new String[]{Device.STATUS_ON, Device.STATUS_OFF, Device.STATUS_OFFLINE, Device.STATUS_ERROR});
+            statusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            statusSpinner.setAdapter(statusAdapter);
+            layout.addView(statusSpinner);
+
+            new AlertDialog.Builder(this)
+                    .setTitle("修改设备状态")
+                    .setView(layout)
+                    .setPositiveButton("确定", (dialog, which) -> {
+                        String deviceId = (String) deviceSpinner.getSelectedItem();
+
+                        Device device = null;
+                        for (Device d : deviceList) {
+                            if (d.getID().equals(deviceId)) {
+                                device = d;
+                                break;
+                            }
                         }
 
-                        @Override
-                        public void onConfirmClick() {
-                            DialogUtil.showToastShort(DebugActivity.this, "点击了确认");
-                        }
+                        String status = (String) statusSpinner.getSelectedItem();
+                        device.setStatus(status);
+                        DeviceUtil.updateDevice(this, device);
+                        DialogUtil.showToastShort(this, "修改设备状态成功");
+                    })
+                    .setNegativeButton("取消", (dialog, which) -> {
+                        // Dismiss the dialog
                     })
                     .show();
+
         });
 
         findViewById(R.id.debug_send_delay_task).setOnClickListener(v -> {
@@ -121,6 +157,65 @@ public class DebugActivity extends AppCompatActivity {
             Action action = new Action("BBB", Action.ACTION_TYPE_CLOSE, TimeUtil.getMillis(now), Device.TYPE_CURTAIN);
             ActionClient.sendAction(this, action);
             Log.d("DebugActivity", "发送消息成功");
+        });
+
+        findViewById(R.id.debug_open_sync_device_status).setOnClickListener(v -> {
+            // Set a boolean value in SharedPreferences to enable automatic device status updates
+            ParamUtil.saveBoolean(this, ParamUtil.UPDATE_DEVICE_STATUS, true);
+            DialogUtil.showToastShort(this, "开启自动更新设备状态");
+        });
+
+        findViewById(R.id.debug_close_sync_device_status).setOnClickListener(v -> {
+            // Set a boolean value in SharedPreferences to disable automatic device status updates
+            ParamUtil.saveBoolean(this, ParamUtil.UPDATE_DEVICE_STATUS, false);
+            DialogUtil.showToastShort(this, "关闭自动更新设备状态");
+        });
+
+        findViewById(R.id.debug_config_curtain_position).setOnClickListener(v -> {
+            // 弹出一个位置设置对话框，0，10，20，...，100
+            LinearLayout layout = new LinearLayout(this);
+            layout.setOrientation(LinearLayout.VERTICAL);
+            layout.setPadding(16, 16, 16, 16);
+
+            // 选择设备ID
+            Spinner deviceSpinner = new Spinner(this);
+            ArrayList<Device> deviceList = DeviceUtil.getDeviceList(this);
+            ArrayList<String> deviceIds = new ArrayList<>();
+            for (Device device : deviceList) {
+                if (device.getType().equals(Device.TYPE_CURTAIN)) {
+                    deviceIds.add(device.getID());
+                }
+            }
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, deviceIds);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            deviceSpinner.setAdapter(adapter);
+            layout.addView(deviceSpinner);
+
+            // 选择位置
+            Spinner positionSpinner = new Spinner(this);
+            ArrayList<String> positions = new ArrayList<>();
+            for (int i = 0; i <= 10; i++) {
+                positions.add(i * 10 + "%");
+            }
+            ArrayAdapter<String> positionAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, positions);
+            positionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            positionSpinner.setAdapter(positionAdapter);
+            layout.addView(positionSpinner);
+
+            new AlertDialog.Builder(this)
+                    .setTitle("设置窗帘位置")
+                    .setView(layout)
+                    .setPositiveButton("确定", (dialog, which) -> {
+                        String deviceId = (String) deviceSpinner.getSelectedItem();
+                        String position = (String) positionSpinner.getSelectedItem();
+                        ParamUtil.saveString(this, ParamUtil.CURTAIN_POSITION, position.substring(0, position.length() - 1));
+                        ActionClient.sendAction(this, new Action(deviceId, Action.ACTION_TYPE_CONFIG_POSITION, TimeUtil.getNowMillis(), Device.TYPE_CURTAIN, position.substring(0, position.length() - 1)));
+                        DialogUtil.showToastShort(this, "设置窗帘位置成功");
+                    })
+                    .setNegativeButton("取消", (dialog, which) -> {
+                        // Dismiss the dialog
+                    })
+                    .show();
         });
     }
 }

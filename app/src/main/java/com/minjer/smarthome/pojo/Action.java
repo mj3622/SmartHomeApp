@@ -5,6 +5,12 @@ public class Action {
     public static final String ACTION_TYPE_OPEN = "open";
     public static final String ACTION_TYPE_CLOSE = "close";
 
+    public static final String ACTION_TYPE_PAUSE = "pause";
+
+    public static final String ACTION_TYPE_CONFIG_SPEED = "speed";
+
+    public static final String ACTION_TYPE_CONFIG_POSITION = "position";
+
     public static final String DEFAULT_LIGHT_COLOR = "ff0000";
 
 

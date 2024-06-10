@@ -39,6 +39,15 @@
                 android:layout_gravity="center_vertical"/>
 
             <ImageView
+                android:id="@+id/refresh_device_status"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/refresh"
+                android:layout_margin="10dp"
+                android:layout_gravity="center_vertical"
+                android:scaleType="fitStart"/>
+
+            <ImageView
                 android:id="@+id/system_info"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
@@ -48,7 +57,6 @@
                 android:scaleType="fitStart"/>
         </LinearLayout>
 
-        <!--   TODO 占位，以后场景选项卡或者显示提示信息    -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -57,6 +65,7 @@
             android:background="@drawable/shap_bg_listview">
 
             <TextView
+                android:id="@+id/scene_hint"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Minjer 的家"

@@ -35,6 +35,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class DeviceFragment extends Fragment {
 
@@ -68,6 +69,22 @@ public class DeviceFragment extends Fragment {
             startActivity(intent);
         });
 
+        // 给刷新按钮添加点击事件
+        rootView.findViewById(R.id.refresh_device_status).setOnClickListener(v -> {
+            // 同步设备信息
+            if (ParamUtil.getBoolean(getContext(), ParamUtil.UPDATE_DEVICE_STATUS, false)) {
+                try {
+                    DeviceUtil.syncDeviceStatus(getContext());
+                    PageUtil.refreshPage(getActivity());
+                } catch (Exception e) {
+                    DialogUtil.showToastShort(getContext(), "网络连接失败");
+                    Log.e(TAG, "Failed to sync device status", e);
+                }
+            } else {
+                DialogUtil.showToastShort(getContext(), "未开启同步功能");
+            }
+        });
+
         // 初始化设备列表
         initDeviceList(rootView);
 
@@ -79,6 +96,7 @@ public class DeviceFragment extends Fragment {
         deviceListView = rootView.findViewById(R.id.device_list);
         emptyView = rootView.findViewById(R.id.device_empty);
 
+
         deviceList = DeviceUtil.getDeviceList(getContext());
         deviceAdapter = new DeviceAdapter(getContext(), R.layout.item_device, deviceList);
         deviceListView.setAdapter(deviceAdapter);
@@ -87,11 +105,19 @@ public class DeviceFragment extends Fragment {
 
         deviceListView.setOnItemClickListener((parent, view, position, id) -> {
             Device device = deviceList.get(position);
-            Log.d(TAG, "Click device: " + device.getName());
-            Intent intent = new Intent(getContext(), BaseDeviceActivity.class);
-            String deviceJson = JsonUtil.toJson(device);
-            intent.putExtra("device", deviceJson);
-            startActivityForResult(intent, REQUEST_CODE_MODIFY_DEVICE);
+
+            if (ParamUtil.getBoolean(getContext(), ParamUtil.UPDATE_DEVICE_STATUS, false) && !Objects.equals(device.getStatus(), Device.STATUS_ONLINE)) {
+                Log.d(TAG, "Click device: " + device.getName() + " 但是设备不在线");
+                DialogUtil.showToastShort(getContext(), "未连接到设备");
+            } else {
+
+                Log.d(TAG, "Click device: " + device.getName());
+                Intent intent = new Intent(getContext(), BaseDeviceActivity.class);
+                String deviceJson = JsonUtil.toJson(device);
+                intent.putExtra("device", deviceJson);
+                startActivityForResult(intent, REQUEST_CODE_MODIFY_DEVICE);
+            }
+
         });
     }
 
@@ -109,6 +135,10 @@ public class DeviceFragment extends Fragment {
     private void initWeather(View rootView) {
         TextView weatherInfo = rootView.findViewById(R.id.weather_info);
         ImageView weatherIcon = rootView.findViewById(R.id.weather_pic);
+
+        TextView scene_hint = rootView.findViewById(R.id.scene_hint);
+        scene_hint.setText(ParamUtil.getString(getContext(), ParamUtil.USER_NAME, "未知用户") + " 的家");
+
 
         // 获取城市信息
         String code = ParamUtil.getString(getContext(), ParamUtil.CITY, null);

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.JsonObject;
+import com.minjer.smarthome.pojo.Device;
 import com.minjer.smarthome.utils.DialogUtil;
 import com.minjer.smarthome.utils.JsonUtil;
 import com.minjer.smarthome.utils.ParamUtil;
@@ -11,6 +12,7 @@ import com.minjer.smarthome.utils.ParamUtil;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -111,7 +113,7 @@ public class DataClient {
         }
     }
 
-    public static boolean checkGateway(String code) throws IOException{
+    public static boolean checkGateway(String code) throws IOException {
         JsonObject params = new JsonObject();
         params.addProperty("gateway_code", code);
 
@@ -126,4 +128,5 @@ public class DataClient {
         return isValid.equals("1");
 
     }
+
 }

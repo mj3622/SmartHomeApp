@@ -13,10 +13,31 @@ public class Device implements Parcelable {
     public static final String TYPE_RADAR = "radar";
     public static final String TYPE_CURTAIN = "curtain";
 
+    public static final String TYPE_RASPBERRY = "raspberry";
+
     public static final String STATUS_ON = "on";
     public static final String STATUS_OFF = "off";
     public static final String STATUS_OFFLINE = "offline";
 
+    public static final String STATUS_ERROR = "error";
+
+    public static final String STATUS_ONLINE = "online";
+
+    public static final String STATUS_UNKNOWN = "unknown";
+
+    public static final String RASPBERRY_ID = "raspberry";
+
+    public static final String TEMPERATURE = "temperature";
+
+    public static final String HUMIDITY = "humidity";
+
+    public static final String RADAR_EXIST_PEOPLE = "radar_exist_people";
+    public static final String RADAR_MOVE_OBJECT = "radar_move_object";
+    public static final String RADAR_STATIC_OBJECT = "radar_static_object";
+
+    public static final String UNKNOW_TEMPERATURE = "获取温度失败";
+
+    public static final String UNKNOW_HUMIDITY = "获取湿度失败";
 
     private String name;
     private String ID;

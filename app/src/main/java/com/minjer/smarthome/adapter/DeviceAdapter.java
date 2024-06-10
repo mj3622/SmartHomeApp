@@ -51,12 +51,17 @@ public class DeviceAdapter extends ArrayAdapter<Device> {
                     contentTextView.setText("开启 | " + desc);
                 } else if (status.equals(Device.STATUS_OFF)) {
                     contentTextView.setText("关闭 | " + desc);
-                } else if (status.equals(Device.STATUS_OFFLINE)){
+                } else if (status.equals(Device.STATUS_OFFLINE)) {
                     contentTextView.setText("离线 | " + desc);
+                } else if (status.equals(Device.STATUS_ONLINE)) {
+                    contentTextView.setText("在线 | " + desc);}
+                else if (status.equals(Device.STATUS_ERROR)) {
+                    contentTextView.setText("设备故障 | " + desc);
                 } else {
                     contentTextView.setText("未知状态 | " + desc);
                 }
             }
+
             if (imageView != null) {
                 String type = d.getType();
                 if (type.equals(Device.TYPE_LIGHT)) {

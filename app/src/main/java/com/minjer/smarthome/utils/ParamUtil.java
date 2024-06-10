@@ -33,6 +33,12 @@ public class ParamUtil {
 
     public static final String ON_TIME_LIST = "on_time_list";
 
+    public static final String UPDATE_DEVICE_STATUS = "update_device_status";
+
+    public static final String CURTAIN_SPEED = "curtain_speed";
+    public static final String CURTAIN_POSITION = "curtain_position";
+    public static final String CURTAIN_OPEN_SETTING = "curtain_open_setting";
+
     // 获取SharedPreferences实例的方法
     private static SharedPreferences getSharedPreferences(Context context) {
         return context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);

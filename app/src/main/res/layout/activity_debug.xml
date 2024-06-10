@@ -6,57 +6,96 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:gravity="center"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     tools:context=".DebugActivity">
 
-    <Button
-        android:id="@+id/debug_add_message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="添加消息" />
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/debug_clear_device"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="清空设备" />
+        <Button
+            android:id="@+id/debug_add_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="添加消息" />
 
-    <Button
-        android:id="@+id/debug_add_device"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="添加设备" />
+        <Button
+            android:id="@+id/debug_clear_device"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="清空设备" />
 
-    <Button
-        android:id="@+id/debug_rabbitmq"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="测试RabbitMQ" />
+        <Button
+            android:id="@+id/debug_add_device"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="添加设备" />
 
-    <Button
-        android:id="@+id/debug_add_custom_device"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="添加自定义设备" />
+        <Button
+            android:id="@+id/debug_rabbitmq"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="测试RabbitMQ" />
 
-    <Button
-        android:id="@+id/debug_show_custom_window"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="显示自定义窗口" />
+        <Button
+            android:id="@+id/debug_add_custom_device"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="添加自定义设备" />
 
-    <Button
-        android:id="@+id/debug_send_delay_task"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:text="发送延迟操作任务" />
+        <Button
+            android:id="@+id/debug_change_device_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="更改设备状态" />
+
+        <Button
+            android:id="@+id/debug_send_delay_task"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="发送延迟操作任务" />
+
+        <Button
+            android:id="@+id/debug_open_sync_device_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="开启同步设备状态" />
+
+        <Button
+            android:id="@+id/debug_close_sync_device_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="关闭同步设备状态" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/debug_config_curtain_position"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="配置窗帘位置" />
+
+    </LinearLayout>
 
 
 </LinearLayout>
