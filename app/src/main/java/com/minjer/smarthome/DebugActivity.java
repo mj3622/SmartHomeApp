@@ -1,6 +1,7 @@
 package com.minjer.smarthome;
 
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.minjer.smarthome.pojo.Device;
 import com.minjer.smarthome.pojo.Message;
 import com.minjer.smarthome.utils.DeviceUtil;
 import com.minjer.smarthome.utils.DialogUtil;
+import com.minjer.smarthome.utils.JsonUtil;
 import com.minjer.smarthome.utils.MessageUtil;
 import com.minjer.smarthome.utils.ParamUtil;
 import com.minjer.smarthome.utils.TimeUtil;
@@ -217,5 +219,115 @@ public class DebugActivity extends AppCompatActivity {
                     })
                     .show();
         });
+
+        findViewById(R.id.debug_config_switch_hall).setOnClickListener(v -> {
+            LinearLayout layout = new LinearLayout(this);
+            layout.setOrientation(LinearLayout.VERTICAL);
+            layout.setPadding(16, 16, 16, 16);
+
+            TextView tv_1 = new TextView(this);
+            tv_1.setText("开关1");
+            layout.addView(tv_1);
+
+            EditText et_1 = new EditText(this);
+            et_1.setInputType(InputType.TYPE_CLASS_NUMBER);
+            layout.addView(et_1);
+
+            TextView tv_2 = new TextView(this);
+            tv_2.setText("开关2");
+            layout.addView(tv_2);
+
+            EditText et_2 = new EditText(this);
+            et_2.setInputType(InputType.TYPE_CLASS_NUMBER);
+            layout.addView(et_2);
+
+            new AlertDialog.Builder(this)
+                    .setTitle("设置开关霍尔值")
+                    .setView(layout)
+                    .setPositiveButton("确定", (dialog, which) -> {
+                        String switch1 = et_1.getText().toString();
+                        String switch2 = et_2.getText().toString();
+                        ActionClient.sendAction(this, new Action("AAA", Action.ACTION_TYPE_CONFIG_SWITCH_HALL, TimeUtil.getNowMillis(), Device.TYPE_SWITCH, switch1 + "," + switch2));
+                        DialogUtil.showToastShort(this, "设置大厅开关成功");
+                    })
+                    .setNegativeButton("取消", (dialog, which) -> {
+                        // Dismiss the dialog
+                    })
+                    .show();
+        });
+
+        findViewById(R.id.debug_config_switch_angle).setOnClickListener(v -> {
+            LinearLayout layout = new LinearLayout(this);
+            layout.setOrientation(LinearLayout.VERTICAL);
+            layout.setPadding(16, 16, 16, 16);
+
+            TextView tv_1 = new TextView(this);
+            tv_1.setText("开关1");
+            layout.addView(tv_1);
+
+            EditText et_1 = new EditText(this);
+            et_1.setInputType(InputType.TYPE_CLASS_NUMBER);
+            layout.addView(et_1);
+
+            TextView tv_2 = new TextView(this);
+            tv_2.setText("开关2");
+            layout.addView(tv_2);
+
+            EditText et_2 = new EditText(this);
+            et_2.setInputType(InputType.TYPE_CLASS_NUMBER);
+            layout.addView(et_2);
+
+            new AlertDialog.Builder(this)
+                    .setTitle("设置开关角度")
+                    .setView(layout)
+                    .setPositiveButton("确定", (dialog, which) -> {
+                        String switch1 = et_1.getText().toString();
+                        String switch2 = et_2.getText().toString();
+                        ActionClient.sendAction(this, new Action("AAA", Action.ACTION_TYPE_CONFIG_SWITCH_ANGLE, TimeUtil.getNowMillis(), Device.TYPE_SWITCH, switch1 + "," + switch2));
+                        DialogUtil.showToastShort(this, "设置开关角度成功");
+                    })
+                    .setNegativeButton("取消", (dialog, which) -> {
+                        // Dismiss the dialog
+                    })
+                    .show();
+        });
+
+        findViewById(R.id.debug_delete_device).setOnClickListener(v -> {
+            LinearLayout layout = new LinearLayout(this);
+            layout.setOrientation(LinearLayout.VERTICAL);
+            layout.setPadding(16, 16, 16, 16);
+
+            Spinner deviceSpinner = new Spinner(this);
+            ArrayList<Device> deviceList = DeviceUtil.getDeviceList(this);
+            ArrayList<String> deviceIds = new ArrayList<>();
+            for (Device device : deviceList) {
+                deviceIds.add(device.getID());
+            }
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, deviceIds);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            deviceSpinner.setAdapter(adapter);
+            layout.addView(deviceSpinner);
+
+            new AlertDialog.Builder(this)
+                    .setTitle("删除设备")
+                    .setView(layout)
+                    .setPositiveButton("确定", (dialog, which) -> {
+                        String deviceId = (String) deviceSpinner.getSelectedItem();
+                        Device device = null;
+                        for (Device d : deviceList) {
+                            if (d.getID().equals(deviceId)) {
+                                device = d;
+                                break;
+                            }
+                        }
+                        DeviceUtil.removeDevice(this, device);
+                        DialogUtil.showToastShort(this, "删除设备成功");
+                    })
+                    .setNegativeButton("取消", (dialog, which) -> {
+                        // Dismiss the dialog
+                    })
+                    .show();
+        });
+
     }
 }

@@ -33,15 +33,18 @@ public class DeviceUtil {
         String deviceListJson = JsonUtil.toJson(deviceList);
         ParamUtil.saveString(context, ParamUtil.DEVICE_LIST, deviceListJson);
     }
+
     public static void clearDeviceList(Context context) {
         ParamUtil.remove(context, ParamUtil.DEVICE_LIST);
     }
+
     public static ArrayList<Device> getDeviceList(Context context) {
         String messageListJson = ParamUtil.getString(context, ParamUtil.DEVICE_LIST, null);
         if (messageListJson == null) {
             return new ArrayList<>();
         }
-        ArrayList<Device> deviceList = JsonUtil.parseToObject(messageListJson, new TypeToken<List<Device>>(){}.getType());
+        ArrayList<Device> deviceList = JsonUtil.parseToObject(messageListJson, new TypeToken<List<Device>>() {
+        }.getType());
         Log.d(TAG, "Device list: " + messageListJson);
 
         return deviceList;
@@ -61,7 +64,12 @@ public class DeviceUtil {
 
     public static void removeDevice(Context context, Device device) {
         ArrayList<Device> deviceList = getDeviceList(context);
-        deviceList.remove(device);
+        for (int i = 0; i < deviceList.size(); i++) {
+            if (deviceList.get(i).getID().equals(device.getID()) && deviceList.get(i).getName().equals(device.getName())) {
+                deviceList.remove(i);
+                break;
+            }
+        }
         String deviceListJson = JsonUtil.toJson(deviceList);
         ParamUtil.saveString(context, ParamUtil.DEVICE_LIST, deviceListJson);
     }
@@ -85,25 +93,36 @@ public class DeviceUtil {
     }
 
     // 从服务器获取设备状态
-    public static void syncDeviceStatus(Context context) throws Exception{
+    public static void syncDeviceStatus(Context context) throws Exception {
         ArrayList<Device> deviceList = getDeviceList(context);
 
         ArrayList<Device> deviceStatusList = ActionClient.getDeviceList(context);
         // 更具ID更新设备状态
 
         for (Device deviceStatus : deviceStatusList) {
-            for (Device device : deviceList) {
-                if (device.getID().equals(deviceStatus.getID())) {
-                    device.setStatus(deviceStatus.getStatus());
-                    break;
+            if (deviceStatus.getID().equals("F88C84")) {
+                for (Device device : deviceList) {
+                    if (device.getID().equals("0") || device.getID().equals("1") || device.getID().equals("FFFFFF")) {
+                        device.setStatus(deviceStatus.getStatus());
+                        break;
+                    }
+                }
+            } else {
+                for (Device device : deviceList) {
+                    if (device.getID().equals(deviceStatus.getID())) {
+                        device.setStatus(deviceStatus.getStatus());
+
+                        break;
+                    }
+                    if (device.getID().equals("111111") || device.getID().equals("123456")) {
+                        device.setStatus(Device.STATUS_ONLINE);
+                        break;
+                    }
                 }
             }
-            // TODO 这里新设备类型未知可能有Bug
-            Device device = new Device("新设备" + deviceStatus.getID(), deviceStatus.getID(), deviceStatus.getType(), deviceStatus.getStatus(), "自动同步的新设备");
-            deviceList.add(0, device);
-        }
 
-        String deviceListJson = JsonUtil.toJson(deviceList);
-        ParamUtil.saveString(context, ParamUtil.DEVICE_LIST, deviceListJson);
+            String deviceListJson = JsonUtil.toJson(deviceList);
+            ParamUtil.saveString(context, ParamUtil.DEVICE_LIST, deviceListJson);
+        }
     }
 }

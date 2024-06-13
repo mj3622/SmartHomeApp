@@ -12,6 +12,9 @@ public class Action {
     public static final String ACTION_TYPE_CONFIG_POSITION = "position";
 
     public static final String DEFAULT_LIGHT_COLOR = "ff0000";
+    public static final String ACTION_TYPE_CONFIG_SWITCH_HALL = "hall";
+
+    public static final String ACTION_TYPE_CONFIG_SWITCH_ANGLE = "angle";
 
 
     private String deviceId;

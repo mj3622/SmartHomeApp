@@ -27,45 +27,55 @@
             android:visibility="gone" />
 
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_margin="20dp"
-            android:background="@drawable/tab_card">
+            android:background="@drawable/tab_card"
+            android:orientation="vertical">
 
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_margin="5dp"
-                android:orientation="horizontal">
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="运行速度"
+                    android:text="开关时间"
                     android:textSize="25dp"
                     android:textStyle="bold" />
 
+                <!--       调整速度         -->
                 <Spinner
                     android:id="@+id/curtainSpeed"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:entries="@array/curtain_speed"
                     android:textSize="35dp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+                <EditText
+                    android:id="@+id/curtainTime"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:hint="请输入时间(S)"
+                    android:inputType="number"
+                    android:textSize="20dp" />
             </LinearLayout>
 
             <!--     窗帘开启程度       -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_margin="5dp"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
@@ -89,29 +99,28 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginRight="20dp"
                 android:layout_marginBottom="5dp"
-                >
+                android:orientation="horizontal">
+
                 <Button
                     android:id="@+id/curtainOpenMinus"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:textSize="20sp"
                     android:text="-"
-                    />
+                    android:textSize="20sp" />
 
                 <SeekBar
                     android:id="@+id/curtainOpenSeekBar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:max="10"
-                    android:layout_weight="5" />
+                    android:layout_weight="5"
+                    android:max="10" />
 
                 <Button
                     android:id="@+id/curtainOpenPlus"
@@ -119,9 +128,8 @@
                     android:layout_height="40dp"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:textSize="20sp"
                     android:text="+"
-                    />
+                    android:textSize="20sp" />
             </LinearLayout>
 
         </LinearLayout>
@@ -160,6 +168,18 @@
                 android:textStyle="bold" />
 
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="horizontal" />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom|right"
+            android:id="@+id/settingCurtain"
+            android:src="@drawable/setting" />
 
 
     </LinearLayout>

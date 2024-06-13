@@ -102,12 +102,38 @@ public class ActionClient extends Thread {
                 device.setStatus(Device.STATUS_UNKNOWN);
             }
             // TODO 添加对设备类型的处理，转换成本地类型（便于后续自动添加）
-
+            device.setType(Device.TYPE_LIGHT);
         }
 
         return deviceList;
     }
 
+    // 获取光照强度
+    public static String getLightIntensity(Context context, String id) {
+        String key = ParamUtil.getString(context, ParamUtil.GATEWAT_CODE, null);
+        Action action = new Action();
+        action.setDeviceType(Device.TYPE_RASPBERRY);
+        action.setActionType(Action.ACTION_TYPE_OPEN);
+        action.setTime(TimeUtil.getNowMillis());
+        action.setDeviceId(id);
+        action.setInfo("light");
+        Log.d(TAG, "Action: " + JsonUtil.toJson(action));
+        String result = null;
+        try {
+            result = new ActionClient(JsonUtil.toJson(action), key).sendMessageAndGetResponse();
+            Log.d(TAG, "Light result: " + result);
+            Map<String, String> res_map = JsonUtil.parseToObject(result, new TypeToken<Map<String, String>>() {
+            }.getType());
+            if (res_map != null) {
+                return res_map.get("brightness");
+            } else {
+                return "获取失败";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "获取光照强度失败", e);
+            return "获取失败";
+        }
+    }
 
     // 获取温湿度
     public static Map<String, String> getTempertureAndHumidity(Context context, String id) {
@@ -152,6 +178,15 @@ public class ActionClient extends Thread {
         action.setTime(TimeUtil.getNowMillis());
         action.setDeviceId(id);
         action.setInfo("radar");
+
+        try {
+            String result = new ActionClient(JsonUtil.toJson(action), key).sendMessageAndGetResponse();
+            Map<String, String> res_map = JsonUtil.parseToObject(result, new TypeToken<Map<String, String>>() {
+            }.getType());
+            return res_map;
+        } catch (Exception e) {
+            Log.e(TAG, "获取雷达数据失败", e);
+        }
 
         return map;
     }

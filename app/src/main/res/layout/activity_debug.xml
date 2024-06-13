@@ -95,6 +95,28 @@
             android:layout_margin="10dp"
             android:text="配置窗帘位置" />
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="配置开关霍尔"
+            android:id="@+id/debug_config_switch_hall" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="配置开关角度"
+            android:id="@+id/debug_config_switch_angle" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="删除设备"
+            android:id="@+id/debug_delete_device" />
+
+
     </LinearLayout>
 
 

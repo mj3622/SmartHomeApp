@@ -64,10 +64,10 @@ public class RadarFragment extends Fragment {
         TextView tv_static_object = rootView.findViewById(R.id.radar_static_object);
 
         // TODO 接入传感器数据，还要进行数据判别
-        if (exist_people.equals("1")) {
-            tv_exist_people.setText("检测到附近有人");
-        } else {
+        if (exist_people.equals("0")) {
             tv_exist_people.setText("未检测到附近有人");
+        } else {
+            tv_exist_people.setText("检测到附近有人");
         }
         tv_move_object.setText("运动物体的距离：" + move_object + "米");
         tv_static_object.setText("静止物体的距离：" + static_object + "米");

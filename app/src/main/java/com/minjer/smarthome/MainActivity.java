@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.minjer.smarthome.http.DataClient;
+import com.minjer.smarthome.utils.DeviceUtil;
 import com.minjer.smarthome.utils.ParamUtil;
 
 
