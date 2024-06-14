@@ -28,3 +28,4 @@
 - ......
 
 # 页面展示 Display
+![页面展示](https://github.com/mj3622/mj3622/blob/master/Pic/smarthome_display.gif)
