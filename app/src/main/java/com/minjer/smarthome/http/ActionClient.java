@@ -7,8 +7,10 @@ import com.google.gson.reflect.TypeToken;
 import com.minjer.smarthome.pojo.Action;
 import com.minjer.smarthome.pojo.ActionPack;
 import com.minjer.smarthome.pojo.Device;
+import com.minjer.smarthome.pojo.Message;
 import com.minjer.smarthome.utils.DialogUtil;
 import com.minjer.smarthome.utils.JsonUtil;
+import com.minjer.smarthome.utils.MessageUtil;
 import com.minjer.smarthome.utils.ParamUtil;
 import com.minjer.smarthome.utils.TimeUtil;
 import com.rabbitmq.client.AMQP;
@@ -67,9 +69,16 @@ public class ActionClient extends Thread {
     public static void executeActionPack(Context context, ActionPack ap) {
         List<Action> actions = ap.getActions();
         for (Action action : actions) {
+            if (action.getDeviceType().equals(Device.TYPE_CURTAIN)) {
+                if (action.getActionType().equals(Action.ACTION_TYPE_OPEN)) {
+                    action.setInfo("100");
+                } else if (action.getActionType().equals(Action.ACTION_TYPE_CLOSE)) {
+                    action.setInfo("0");
+                }
+            }
             sendAction(context, action);
             try {
-                Thread.sleep(200);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -108,6 +117,33 @@ public class ActionClient extends Thread {
         return deviceList;
     }
 
+    // 获取开关状态
+    public static String getSwitchStatus(Context context, String id) {
+        String key = ParamUtil.getString(context, ParamUtil.GATEWAT_CODE, null);
+        Action action = new Action();
+        action.setDeviceType(Device.TYPE_RASPBERRY);
+        action.setActionType(Action.ACTION_TYPE_OPEN);
+        action.setTime(TimeUtil.getNowMillis());
+        action.setDeviceId(id);
+        action.setInfo("switch");
+        Log.d(TAG, "Action: " + JsonUtil.toJson(action));
+        String result = null;
+        try {
+            result = new ActionClient(JsonUtil.toJson(action), key).sendMessageAndGetResponse();
+            Log.d(TAG, "Switch status result: " + result);
+            Map<String, String> res_map = JsonUtil.parseToObject(result, new TypeToken<Map<String, String>>() {
+            }.getType());
+            if (res_map != null) {
+                return res_map.get("switch" + id);
+            } else {
+                return "获取失败";
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "获取开关状态失败", e);
+            return "获取失败";
+        }
+    }
+
     // 获取光照强度
     public static String getLightIntensity(Context context, String id) {
         String key = ParamUtil.getString(context, ParamUtil.GATEWAT_CODE, null);
@@ -125,6 +161,8 @@ public class ActionClient extends Thread {
             Map<String, String> res_map = JsonUtil.parseToObject(result, new TypeToken<Map<String, String>>() {
             }.getType());
             if (res_map != null) {
+                Message message = new Message("光照强度", "当前光照强度为：" + res_map.get("brightness") + "lux", TimeUtil.getNowTime());
+                MessageUtil.addMessage(context, message);
                 return res_map.get("brightness");
             } else {
                 return "获取失败";
@@ -155,6 +193,10 @@ public class ActionClient extends Thread {
             }.getType());
 
             if (res_map != null) {
+
+                Message message = new Message("温湿度", "当前温度为：" + res_map.get("temperature") + "℃，湿度为：" + res_map.get("humidity") + "%", TimeUtil.getNowTime());
+                MessageUtil.addMessage(context, message);
+
                 return res_map;
             } else {
                 return map;
@@ -183,6 +225,7 @@ public class ActionClient extends Thread {
             String result = new ActionClient(JsonUtil.toJson(action), key).sendMessageAndGetResponse();
             Map<String, String> res_map = JsonUtil.parseToObject(result, new TypeToken<Map<String, String>>() {
             }.getType());
+
             return res_map;
         } catch (Exception e) {
             Log.e(TAG, "获取雷达数据失败", e);

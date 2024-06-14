@@ -2,6 +2,7 @@ package com.minjer.smarthome.adapter;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,6 +93,12 @@ public class ActionPackAdapter extends ArrayAdapter<ActionPack> {
                             .setTitle("执行调度")
                             .setMessage("您确认要执行任务调度 " + ap.getPackName() + " 吗？")
                             .setPositiveButton("确认", (dialog, which) -> {
+                                Log.d("ActionPackAdapter", "执行任务调度" + ap.getActions());
+
+                                for (Action action : ap.getActions()) {
+                                    Log.d("ActionPackAdapter", "执行任务" + action.getDeviceId());
+                                }
+
                                 ActionClient.executeActionPack(getContext(), ap);
                                 DialogUtil.showToastShort(mContext, "任务调度已执行");
                             })

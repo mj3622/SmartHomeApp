@@ -16,6 +16,7 @@ import com.minjer.smarthome.pojo.Action;
 import com.minjer.smarthome.pojo.Device;
 import com.minjer.smarthome.utils.PageUtil;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
@@ -45,6 +46,7 @@ public class RadarFragment extends Fragment {
 
         // 获取传感器数据
         Map<String, String> res_map = ActionClient.getRadarData(getContext(), device.getID());
+        if (res_map == null)  res_map = new HashMap<>();
         String exist_people = res_map.get(Device.RADAR_EXIST_PEOPLE);
         String move_object = res_map.get(Device.RADAR_MOVE_OBJECT);
         String static_object = res_map.get(Device.RADAR_STATIC_OBJECT);
@@ -63,7 +65,6 @@ public class RadarFragment extends Fragment {
         TextView tv_move_object = rootView.findViewById(R.id.radar_move_object);
         TextView tv_static_object = rootView.findViewById(R.id.radar_static_object);
 
-        // TODO 接入传感器数据，还要进行数据判别
         if (exist_people.equals("0")) {
             tv_exist_people.setText("未检测到附近有人");
         } else {
